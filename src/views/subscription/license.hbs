@@ -1,0 +1,136 @@
+{{#extend 'stylesheets'}}
+<!-- Datatables -->
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .quick-btn { background: #EEEEEE;
+        box-shadow: 0 0 0 1px #F8F8F8 inset, 0 0 0 1px #CCCCCC;
+        color: #444444;
+        display: inline-block;
+        height: 80px;
+        margin: 10px;
+        padding-top: 16px;
+        text-align: center;
+        text-decoration: none;
+        width: 90px;
+        position: relative;
+        }
+        .quick-btn span {
+        display: block;
+        }
+        .quick-btn .label {
+        position: absolute;
+        right: -5px;
+        top: -5px;
+        }
+        .quick-btn:hover {
+        text-decoration: none;
+        color: #fff;
+        background-color: #4d7589;
+        box-shadow: 3px 4px 1px #ccc;
+        }
+        .quick-btn.small {
+        width: 40px;
+        height: 30px;
+        padding-top: 6px;
+        }
+
+    </style>
+
+{{/extend}}
+
+{{#if errors }}
+    {{#each errors }}
+          <p class="alert alert-danger">{{ this.msg }}</p>
+    {{/each}}
+{{/if}}
+
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+            <h2>Insert License</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            <br />
+            <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="/subscription/activate/license/key">
+
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">License Key <span class="required">*</span>
+                    </label>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <input type="text" id="key" name="key" placeholder="License Key" required="required" class="form-control col-md-7 col-xs-12">
+                    </div>
+                    <span class="col-md-2 col-sm-2 col-xs-12 exist"></span>
+                </div>
+                
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                    {{!-- <button class="btn btn-primary" type="button">Cancel</button> --}}
+                    <button class="btn btn-primary" type="reset">Reset</button>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+                </div>
+
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+{{#extend 'scripts'}}
+    <!-- Datatables -->
+    <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+
+<script>
+    
+    $(document).ready(function() {
+    $("input[name='key']").keyup(function() {
+
+        var key = $("input[name='key']").val();
+
+        console.log(key);
+
+        $.ajax({
+
+            type: "POST", // Post / Get method
+            url: "/subscription/check/license/key", //Where form data is sent on submission
+            dataType:"text", // Data type, HTML, json etc.
+            data:{ key:key}, //Form variables
+            success:function(response){
+
+                if(response === 'success'){
+                    $('.exist').html('<i class="fa fa-check text-success"> <b>Valid Key</b> </i>');
+                } else {
+                    $('.exist').html('<i class="fa fa-times text-danger"> <b>Invalid Key </b> </i>');
+                }
+            }
+        })
+    })
+});
+
+</script>
+
+{{/extend}}

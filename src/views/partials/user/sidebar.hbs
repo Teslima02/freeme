@@ -1,0 +1,238 @@
+<div class="left_col scroll-view">    
+    <!-- menu profile quick info -->
+    {{!-- <a href="/dashboard"> --}}
+        <div class="profile clearfix">
+            <div class="profile_pic" style="padding: 5px">
+            {{#if (eq user._storeId.logo '')}}
+                <img src="/images/store/{{user._storeId.logo}}" alt="..." height="80px" width="80px">
+            {{else}}
+                <img src="/images/store/store.jpeg" alt="..." height="80px" width="80px">
+            {{/if}}
+            </div>
+            <div class="profile_info">
+                <h2>{{user._storeId.name}}</h2>
+            </div>
+        </div>
+    {{!-- </a> --}}
+    <!-- /menu profile quick info -->
+
+    <div class="clearfix"></div>
+
+    <!-- menu profile quick info -->
+    <div class="profile clearfix">
+        <div class="profile_pic">
+        <img src="/images/member/{{user.passport}}" alt="..." class="img-circle profile_img">
+        </div>
+        <div class="profile_info">
+        <span>Welcome</span>
+        <h2>{{user.firstname}} {{user.middlename}} {{user.lastname}}</h2>
+        </div>
+    </div>
+    <!-- /menu profile quick info -->
+
+    <br />
+
+    <!-- sidebar menu -->
+    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+        <div class="menu_section">
+        <h3>General</h3>
+            {{#if (eq user.roleId 'admin')}}
+                <ul class="nav side-menu">
+                    <li><a href="/dashboard"><i class="fa fa-laptop"></i>Dashboard</a></li>
+                    <li><a><i class="fa fa-home"></i> Branch Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/branch">Manage Branch</a></li>
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-user"></i> Staff Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/admin/admins">Manage Admins</a></li>
+                        <li><a href="/admin/staff">Manage Staff</a></li>
+                        <li><a href="/admin/staff/enter/product">Give Right To Enter Product</a></li>
+                        <li><a href="/admin/trash">Trash</a></li>
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-user"></i> Product Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/store/categories">Categories</a></li>
+                        <li><a href="/product">Manage Product</a></li>
+                        <li><a href="/product/move">Product Transfer Record</a></li>
+                        {{!-- <li><a href="/product/barcode">Barcode</a></li> --}}
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-user"></i> Sales Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/sales/create/sales">Create Sales</a></li>
+                        {{!-- <li><a href="/sales/create/sales/pos">Enter Sales With POS</a></li> --}}
+                        <li><a href="/sales/manage/sales">Manage Sales</a></li>
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-user"></i> Supply Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/supplier">Manage Suppliers</a></li>
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-user"></i> Report Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/report">Manage Sales Report</a></li>
+                        <li><a href="/report/product">Manage Product Report</a></li>
+                        <li><a href="/report/product/update">Manage Product Update Report</a></li>
+                        <li><a href="/report/account">Manage Account Report</a></li>
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-user"></i> Promotion Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/promo">Manage Product For Promotion</a></li>
+                    </ul>
+                    </li>
+                    <li><a><i class="fa fa-windows"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/store/roles">Manage Roles</a></li>
+                    </ul>
+                    </li>
+                    {{!-- <li><a><i class="fa fa-windows"></i> Barcode Module <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu subs">
+                        <li><a href="/admin/gen">Generate New Barcode</a></li>
+                        <li><a href="/admin/gen/existing">Generate Existing Barcode</a></li>
+                    </ul>
+                    </li> --}}
+                </ul>
+            {{else if (eq user._roleId.name 'admin')}}
+                <ul class="nav side-menu">
+                    <li><a href="/dashboard"><i class="fa fa-laptop"></i>Dashboard</a></li>
+                    <li><a><i class="fa fa-user"></i> Staff Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/admin/staff">Manage Staff</a></li>
+                        <li><a href="/admin/trash">Trash</a></li>
+                    </ul>
+                    </li>
+                    {{#if (eq user.enterProduct true)}}
+                    <li><a><i class="fa fa-user"></i> Product Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/store/categories">Categories</a></li>
+                        <li><a href="/product">Manage Product</a></li>
+                    </ul>
+                    </li>
+                    {{/if}}
+                    <li><a><i class="fa fa-user"></i> Sales Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/sales/create/sales">Create Sales</a></li>
+                        {{!-- <li><a href="/sales/create/sales/pos">Enter Sales With POS</a></li> --}}
+                        <li><a href="/sales/manage/sales">Manage Sales</a></li>
+                    </ul>
+                    </li>
+                    {{#if (eq user.enterProduct true)}}
+                    <li><a><i class="fa fa-user"></i> Supply Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/supplier">Manage Suppliers</a></li>
+                    </ul>
+                    </li>
+                    {{/if}}
+                    <li><a><i class="fa fa-user"></i> Report Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/report">Manage Sales Report</a></li>
+                        <li><a href="/report/product">Manage Product Report</a></li>
+                        <li><a href="/report/account">Manage Account Report</a></li>
+                    </ul>
+                    </li>
+                    {{!-- <li><a><i class="fa fa-user"></i> Promotion Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/promotion">Manage Product For Promotion</a></li>
+                    </ul>
+                    </li> --}}
+                    {{!-- <li><a><i class="fa fa-windows"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/store/roles">Manage Roles</a></li>
+                    </ul>
+                    </li> --}}
+                </ul>
+            {{else if (eq user._roleId.name 'staff')}}
+                <ul class="nav side-menu">
+                    <li><a href="/dashboard"><i class="fa fa-laptop"></i>Dashboard</a></li>
+                    {{#if (eq user.enterProduct true)}}
+                    <li><a><i class="fa fa-user"></i> Product Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/store/categories">Categories</a></li>
+                        <li><a href="/product">Manage Product</a></li>
+                    </ul>
+                    </li>
+                    {{/if}}
+                    <li><a><i class="fa fa-home"></i> Sales Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/sales/create/sales">Create Sales</a></li>
+                        {{!-- <li><a href="/sales/create/sales/pos">Enter Sales With POS</a></li> --}}
+                        <li><a href="/sales/manage/sales">Manage Sales</a></li>
+                    </ul>
+                    </li>
+                    {{#if (eq user.enterProduct true)}}
+                    <li><a><i class="fa fa-user"></i> Supply Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/supplier">Manage Suppliers</a></li>
+                    </ul>
+                    </li>
+                    {{/if}}
+                    <li><a><i class="fa fa-user"></i> Promotion Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/promo">Manage Product For Promotion</a></li>
+                    </ul>
+                    </li>
+                </ul>
+            {{else if (eq user.enterProduct true)}}
+                <ul class="nav side-menu">
+                    <li><a><i class="fa fa-user"></i> Product Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/store/categories">Categories</a></li>
+                        <li><a href="/product">Manage Product</a></li>
+                    </ul>
+                    </li>
+                    
+                    <li><a><i class="fa fa-user"></i> Supply Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/supplier">Manage Suppliers</a></li>
+                    </ul>
+                    </li>
+                </ul>
+            {{else if (eq user.roleId 'sadmin')}}
+                <ul class="nav side-menu">
+                    <li><a href="/dashboard"><i class="fa fa-laptop"></i>Dashboard</a></li>
+
+                    <li><a><i class="fa fa-home"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="/store/roles">Manage Roles</a></li>
+                        </ul>
+                    </li>
+
+                    <li><a><i class="fa fa-home"></i> Subscription <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="/subscription/packages">Manage Packages</a></li>
+                            <li><a href="/subscription/generate/license">Generate Licenses</a></li>
+                            <li><a href="/subscription/manage/license">Manage Licenses</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            {{/if}}
+        </div>
+
+    </div>
+    <!-- /sidebar menu -->
+
+    <!-- /menu footer buttons -->
+    <div class="sidebar-footer hidden-small">
+        {{!-- <a data-toggle="tooltip" data-placement="top" title="Settings">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+        </a>
+        <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+        </a>
+        <a data-toggle="tooltip" data-placement="top" title="Lock">
+        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+        </a> --}}
+        <a data-toggle="tooltip" data-placement="top" title="Logout" href="/logout">
+        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+        </a>
+    </div>
+    <!-- /menu footer buttons -->
+</div>
+
+{{#extend 'scripts'}}
+{{/extend}}
