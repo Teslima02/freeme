@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 import passportLocalMongoose from 'passport-local-mongoose';
 
 const Account = new Schema({
+  _familyId: { type: Schema.Types.ObjectId, ref: 'families' },
   roleId: { type: String, lowercase: true, trim: true,
             enum: ['admin', 'family', 'friend'] },
-  firstname: String,
-  middlename: String,
-  lastname: String,
+  firstName: String,
+  middleName: String,
+  lastName: String,
   username: String,
   password: String,
   email: { type: String, index: { unique: true } },
@@ -19,9 +20,7 @@ const Account = new Schema({
   state: String,
   lga: String,
   token: String,
-  rightToDeleteAdmin: { type: Boolean, default: false },
   status: { type: Boolean, default: true },
-  enterProduct: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
 });
 

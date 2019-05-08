@@ -1,71 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Register - {{@defaultPageTitle}}</title>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap -->
-    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="/vendors/animate.css/animate.min.css" rel="stylesheet">
+  <title>Login | {{@defaultPageTitle}}</title>
 
-    <!-- Custom Theme Style -->
-    <link href="/stylesheets/custom.min.css" rel="stylesheet">
-  </head>
+  <!-- Bootstrap -->
+  <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- Animate.css -->
+  <link href="/vendors/animate.css/animate.min.css" rel="stylesheet">
 
-  <body class="login">
-    <div>
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="login_content">
-            {{> msg}}
-            <form action="/login" method="post">
-              <h1>Login Form</h1>
-              <div>
-                <input type="text" class="form-control" name="username" placeholder="Username" required="" />
-              </div>
-              <div>
-                <input type="password" class="form-control" name="password" placeholder="Password" required="" />
-              </div>
-              <div class="form-group">
-                  <button type="submit" class="btn btn-style-1">Submit</button>
-              </div>
-              {{!-- <div>
-                <a class="btn btn-default submit" href="#">Log in</a>
-              </div> --}}
-              <div>
-                {{!-- <a class="btn btn-default submit" href="#">Log in</a> --}}
-                <a class="reset_pass" href="#">Lost your password?</a>
-              </div>
+  <!-- Custom Theme Style -->
+  <link href="/stylesheets/custom.min.css" rel="stylesheet">
+</head>
+
+<body class="login">
+  <div>
+    <a class="hiddenanchor" id="signup"></a>
+    <a class="hiddenanchor" id="signin"></a>
+
+    <div class="login_wrapper">
+      {{> msg}}
+      <div class="animate form login_form">
+        <section class="login_content">
+          <form action="/login" method="post">
+            <h1>Login Form</h1>
+            <div>
+              <input type="text" class="form-control" name="username" placeholder="Username" required="" />
+            </div>
+            <div>
+              <input type="password" class="form-control" name="password" placeholder="Password" required="" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-style-1">Submit</button>
+              {{!-- <a class="btn btn-default submit">Log in</a> --}}
+              <a class="reset_pass" href="#">Lost your password?</a>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="separator">
+              <p class="change_link">New to site?
+                <a href="#signup" class="to_register"> Create Account </a>
+              </p>
 
               <div class="clearfix"></div>
+              <br />
 
-              <div class="separator">
-                <p class="change_link">New to site?
-                  <a href="/register"> Create Account </a>
-                </p>
+              {{!-- <div>
+                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+              </div> --}}
+            </div>
+          </form>
+        </section>
+      </div>
 
-                <div class="clearfix"></div>
-                <br />
+      <div id="register" class="animate form registration_form">
+        <section class="login_content">
+          <form action="/user/register" method="post">
+            <h1>Create Account</h1>
+            <div>
+              <input type="text" class="form-control" name="firstName" placeholder="firstName" required="" />
+            </div>
+            <div>
+              <input type="text" class="form-control" name="middleName" placeholder="middleName" />
+            </div>
+            <div>
+              <input type="text" class="form-control" name="lastName" placeholder="lastName" />
+            </div>
+            <div>
+              <input type="text" class="form-control" name="username" placeholder="Username" required="" />
+            </div>
+            <div>
+              <input type="number" class="form-control" name="phone" placeholder="Phone Number" required="" />
+            </div>
+            <br>
+            <div>
+              <input type="email" class="form-control" name="email" placeholder="Email" required="" />
+            </div>
+            <div class="form-group has-feedback">
+              <select class="form-control" name="gender" id="gender" required>
+                <option disabled selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" name="address" id="address" rows="2" placeholder='Address' required></textarea>
+            </div>
+            <div>
+              <input type="password" class="form-control" name="password" placeholder="Password" required="" />
+            </div>
+            <div>
+              <input type="password" class="form-control" name="cpassword" placeholder="confirm Password" required="" />
+            </div>
+            <div>
+              <button type="submit" class="btn btn-style-1">Submit</button>
+              {{!-- <a class="btn btn-default submit" href="index.html">Submit</a> --}}
+            </div>
 
-                <div>
-                  <h1><i class="fa fa-paw"></i> Optisoft!</h1>
-                  <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-                </div>
-              </div>
-            </form>
-          </section>
-        </div>
+            <div class="clearfix"></div>
+
+            <div class="separator">
+              <p class="change_link">Already a member ?
+                <a href="#signin" class="to_register"> Log in </a>
+              </p>
+
+              <div class="clearfix"></div>
+              <br />
+
+              {{!-- <div>
+                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+              </div> --}}
+            </div>
+          </form>
+        </section>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

@@ -94,7 +94,7 @@ app.use(function(req, res, next) {
 
 // API routes start
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/store', store);
 app.use('/sadmin', sadmin);
 app.use('/admin', admin);
