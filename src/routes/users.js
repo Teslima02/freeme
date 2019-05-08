@@ -6,11 +6,18 @@ import fs from 'fs';
 import path from 'path';
 import jwt from 'jsonwebtoken';
 import guard from 'connect-ensure-login';
+import { adminOnly, familyOnly } from '../helpers/bridge';
 const router = express.Router();
 
 router.get('/', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
   res.render('user/manageUsers', { user, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
+router.get('/all/members', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const users = await Account.find();
+  res.render('user/allMembers', { user, users, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
 router.get('/dashboard', guard.ensureLoggedIn(), async (req, res) => {
@@ -23,11 +30,11 @@ router.get('/admin/dashboard', guard.ensureLoggedIn(), async (req, res) => {
   res.render('user/dashboard', { user, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
-router.post('/register', async (req, res) => {
-  const family = new Family(req.body);
-  family.save((err) => {
-    if (err) throw err;
-  });
+
+router.get('/assign/user', guard.ensureLoggedIn(), adminOnly, async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const users = await Account.find({ _familyId: { $exists: false } });
+  res.render('user/assign', { user, users, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
 router.post('/register', async (req, res) => {

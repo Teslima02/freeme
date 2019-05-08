@@ -22,6 +22,7 @@ import hbsutils from 'hbs-utils';
 // above this line.
 import index from './routes/index';
 import users from './routes/users';
+import family from './routes/family';
 import store from './routes/store';
 import sadmin from './routes/sadmin';
 import admin from './routes/admin';
@@ -95,6 +96,7 @@ app.use(function(req, res, next) {
 // API routes start
 app.use('/', index);
 app.use('/user', users);
+app.use('/family', family);
 app.use('/store', store);
 app.use('/sadmin', sadmin);
 app.use('/admin', admin);

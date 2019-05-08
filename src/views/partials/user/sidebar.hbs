@@ -1,4 +1,4 @@
-<div class="left_col scroll-view">    
+<div class="left_col scroll-view">
     <!-- menu profile quick info -->
     {{!-- <a href="/dashboard"> --}}
         <div class="profile clearfix">
@@ -39,13 +39,11 @@
             {{#if (eq user.roleId 'admin')}}
                 <ul class="nav side-menu">
                     <li><a href="/dashboard"><i class="fa fa-laptop"></i>Dashboard</a></li>
-                    <li><a><i class="fa fa-home"></i> Branch Management <span class="fa fa-chevron-down"></span></a>
+                    <li><a href="/user/all/members"><i class="fa fa-users"></i>All Members</a></li>
+                    <li><a href="/family"><i class="fa fa-users"></i>Families</a></li>
+                    <li><a><i class="fa fa-user"></i> Users Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="/branch">Manage Branch</a></li>
-                    </ul>
-                    </li>
-                    <li><a><i class="fa fa-user"></i> Staff Management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+                        <li><a href="/user/assign/user">Manage Users</a></li>
                         <li><a href="/admin/admins">Manage Admins</a></li>
                         <li><a href="/admin/staff">Manage Staff</a></li>
                         <li><a href="/admin/staff/enter/product">Give Right To Enter Product</a></li>

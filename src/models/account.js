@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 import passportLocalMongoose from 'passport-local-mongoose';
 
 const Account = new Schema({
-  _familyId: { type: Schema.Types.ObjectId, ref: 'families' },
   roleId: { type: String, lowercase: true, trim: true,
             enum: ['admin', 'family', 'friend'] },
   firstName: String,
