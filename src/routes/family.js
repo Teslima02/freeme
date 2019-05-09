@@ -15,7 +15,9 @@ router.get('/', guard.ensureLoggedIn(), adminOrFamilyOrFriendOnly, async (req, r
 // post family
 router.post('/', guard.ensureLoggedIn(), adminOrFamilyOrFriendOnly, async (req, res) => {
 
-  const family = await Family.findOne({ name: name });
+  console.log(req.body);
+
+  const family = await Family.findOne({ name: req.body.name });
   if (family) {
     req.flash('error', 'Family with that name already exist');
     res.redirect('back');
