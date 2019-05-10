@@ -136,10 +136,17 @@ router.post('/delete', guard.ensureLoggedIn(), async (req, res) => {
   res.send('success');
 });
 
-router.get('/can/see/by/family', guard.ensureLoggedIn(), async (req, res) => {
+router.get('/can/see/by/family/:_familyId', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
-  const pictures = await File.find({ _createdBy: req.user._id, family: true, fileType: 'picture' });
-  const videos = await File.find({ _createdBy: req.user._id, family: true, fileType: 'video' });
+  const getUser = await Account.findOne({ _familyId: req.params._familyId });
+  let pictures = 0;
+  let videos = 0;
+  if (getUser) {
+    pictures = await File.find({ family: true, fileType: 'picture' });
+    videos = await File.find({ family: true, fileType: 'video' });
+  }
+  // const pictures = await File.find({ _createdBy: req.user._id, family: true, fileType: 'picture' });
+  // const videos = await File.find({ _createdBy: req.user._id, family: true, fileType: 'video' });
   res.render('file/generalFile', { user, pictures, videos, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
