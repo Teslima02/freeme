@@ -8,19 +8,9 @@ const router = express.Router();
 
 
 router.get('/dashboard', async (req, res) => {
-  const user = await Account.findById(req.user._id).populate('_roleId').populate('_storeId');
-  if (user.roleId === 'admin') {
+  const user = await Account.findById(req.user._id);
+  if (user) {
     res.redirect('/user/dashboard');
-  } else if (user.roleId === 'sadmin') {
-    res.redirect('/sadmin/dashboard');
-  } else if (user._roleId.name === 'admin' && user._roleId.roleType === 'Store') {
-    res.redirect('/admin/dashboard');
-  } else if (user._roleId.name === 'staff' && user._roleId.roleType === 'Store') {
-    res.redirect(`/staff/dashboard/${user._storeId._id}/${user._branchId}`);
-  } else if (user._roleId.name === 'admin' && user._roleId.roleType === 'Branch') {
-    res.redirect(`/branch/admin/dashboard/${user._storeId._id}/${user._branchId}`);
-  } else if (user._roleId.name === 'staff' && user._roleId.roleType === 'Branch') {
-    res.redirect(`/staff/dashboard/${user._storeId._id}/${user._branchId}`);
   }
 });
 

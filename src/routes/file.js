@@ -136,5 +136,11 @@ router.post('/delete', guard.ensureLoggedIn(), async (req, res) => {
   res.send('success');
 });
 
+router.get('/can/see/by/family', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const pictures = await File.find({ _createdBy: req.user._id, family: true, fileType: 'picture' });
+  const videos = await File.find({ _createdBy: req.user._id, family: true, fileType: 'video' });
+  res.render('file/generalFile', { user, pictures, videos, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
 
 export default router;
