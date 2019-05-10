@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const File = new Schema({
-  name: String,
+  _createdBy: { type: Schema.Types.ObjectId, ref: 'accounts' },
+  file: String,
   fileName: String,
   friend: { type: Boolean, default: false },
   family: { type: Boolean, default: false },
