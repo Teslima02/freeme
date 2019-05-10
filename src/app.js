@@ -51,7 +51,7 @@ const templateUtil = hbsutils(hbs);
 Fawn.init(mongoose);
 // export locals ato template
 hbs.localsAsTemplateData(app);
-app.locals.defaultPageTitle = 'Cube700';
+app.locals.defaultPageTitle = 'FreeMeDigital';
 
 // view engine setup
 templateUtil.registerPartials(`${__dirname}/views/partials`);

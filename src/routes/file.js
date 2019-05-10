@@ -9,8 +9,14 @@ const router = express.Router();
 
 router.get('/', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
-  const files = await File.find({ _createdBy: req.user._id });
-  res.render('file/manage', { user, files, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+  const files = await File.find({ _createdBy: req.user._id, fileType: 'picture' });
+  res.render('file/managePicture', { user, files, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
+router.get('/video', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const files = await File.find({ _createdBy: req.user._id, fileType: 'video' });
+  res.render('file/manageVideo', { user, files, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
 router.get('/dashboard', guard.ensureLoggedIn(), async (req, res) => {
@@ -25,10 +31,6 @@ router.post('/upload', async (req, res) => {
 
     const fileUpload = files.file;
     const uploadInfo = fields;
-
-    console.log(fileUpload, 'fileUpload');
-    console.log(uploadInfo, 'uploadInfo');
-    // return false;
 
     if (fileUpload.file === null) {
       req.flash('error', 'Please Fill All The Required Forms');
@@ -50,6 +52,7 @@ router.post('/upload', async (req, res) => {
     newFile._createdBy = req.user._id;
     newFile.file = uploadInfo.file;
     newFile.fileName = uploadInfo.fileName;
+    newFile.fileType = uploadInfo.fileType;
     newFile.friend = uploadInfo.friend;
     newFile.family = uploadInfo.family;
     newFile.save((err) => {
@@ -62,5 +65,19 @@ router.post('/upload', async (req, res) => {
     });
   });
 });
+
+
+router.get('/view/:_fileId', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const file = await File.findOne({ _createdBy: req.user._id, _id: req.params._fileId });
+  res.render('file/viewFile', { user, file, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
+router.get('/view/video/:_fileId', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const file = await File.findOne({ _createdBy: req.user._id, _id: req.params._fileId });
+  res.render('file/viewVideo', { user, file, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
 
 export default router;

@@ -229,12 +229,9 @@
                                 <td>{{fileName}}</td>
                                 <td>{{file}}</td>
                                 <td>
-                                    <a href="/branch/user/view/{{_id}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-
-                                    <a href="/branch/user/view/{{_id}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+                                    <a href="/file/view/video/{{_id}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
 
                                     <button onclick="banMember(this.value)" value="{{_id}}" class="btn btn-danger btn-sm">Di-activate</i></button>
-                                    {{!-- <button onclick="banMember(this.value)" value="{{_id}}" class="btn btn-info btn-sm">activate</button> --}}
                                 </td>
                             </tr>
                             {{/each}}
@@ -269,10 +266,18 @@
                                 <form class="form-horizontal form-label-left input_mask" method="POST" action="/file/upload"
                                     enctype="multipart/form-data">
 
-                                    <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                                         <input type="text" class="form-control has-feedback-left" id="inputSuccess2"
                                             name="fileName" placeholder="File Name" required>
                                         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                        <select class="form-control" name="fileType" id="fileType" required>
+                                            <option>Select File Type</option>
+                                            <option value="picture">Picture</option>
+                                            <option value="video">Video</option>
+                                        </select>
                                     </div>
 
                                     <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
