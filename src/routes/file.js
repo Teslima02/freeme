@@ -9,13 +9,13 @@ const router = express.Router();
 
 router.get('/', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
-  const files = await File.find({ _createdBy: req.user._id, fileType: 'picture' });
+  const files = await File.find({ _createdBy: req.user._id, fileType: 'picture', status: true });
   res.render('file/managePicture', { user, files, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
 router.get('/video', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
-  const files = await File.find({ _createdBy: req.user._id, fileType: 'video' });
+  const files = await File.find({ _createdBy: req.user._id, fileType: 'video', status: true });
   res.render('file/manageVideo', { user, files, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
@@ -77,6 +77,83 @@ router.get('/view/video/:_fileId', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
   const file = await File.findOne({ _createdBy: req.user._id, _id: req.params._fileId });
   res.render('file/viewVideo', { user, file, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
+router.get('/view/archive', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const file = await File.findOne({ _createdBy: req.user._id });
+  res.render('file/viewVideo', { user, file, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
+// router.get('/view/archive/video', guard.ensureLoggedIn(), async (req, res) => {
+//   const user = await Account.findById(req.user._id);
+//   const file = await File.findOne({ _createdBy: req.user._id, _id: req.params._fileId });
+//   res.render('file/viewVideo', { user, file, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+// });
+
+router.post('/archive/picture', guard.ensureLoggedIn(), async (req, res) => {
+
+  const id = req.body.id;
+  const file = await File.findById(id);
+  if (file) {
+    file.status = false;
+    file.save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send('success');
+      };
+    });
+  }
+});
+
+router.post('/archive/video', guard.ensureLoggedIn(), async (req, res) => {
+
+  const id = req.body.id;
+  const file = await File.findById(id);
+  if (file) {
+    file.status = false;
+    file.save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send('success');
+      };
+    });
+  }
+});
+
+
+// staff trash
+router.get('/trash', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const files = await File.find({ _createdBy: req.user._id, status: false });
+  res.render('file/trash', { user, files, layout: 'layouts/user' });
+});
+
+router.post('/restore', guard.ensureLoggedIn(), async (req, res) => {
+
+  const id = req.body.id;
+  const file = await File.findById(id);
+
+  if (file.status === false) {
+    file.status = 1;
+    file.save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send('success');
+      };
+    });
+  }
+});
+
+
+// delete user permanetly
+router.post('/delete', guard.ensureLoggedIn(), async (req, res) => {
+  const id = req.body.id;
+  await File.findById(id).remove();
+  res.send('success');
 });
 
 
