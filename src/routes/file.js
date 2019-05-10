@@ -150,4 +150,21 @@ router.get('/can/see/by/family/:_familyId', guard.ensureLoggedIn(), async (req, 
   res.render('file/generalFile', { user, pictures, videos, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
+router.get('/can/see/by/friend/:_friendId', guard.ensureLoggedIn(), async (req, res) => {
+  const user = await Account.findById(req.user._id);
+  const upLineFriend = await Account.findById(req.params._friendId);
+  // const getUser = await Account.findOne({ _myFriendId: user._myFriendId, _id: req.params._friendId, roleId: 'friend' });
+  const getUser = await Account.findOne({ _id: req.params._friendId, roleId: 'friend' });
+  console.log(getUser);
+  let pictures = 0;
+  let videos = 0;
+  if (getUser) {
+    pictures = await File.find({ _createdBy: upLineFriend._id, friend: true, fileType: 'picture' });
+    videos = await File.find({ _createdBy: upLineFriend._id, friend: true, fileType: 'video' });
+  }
+  // const pictures = await File.find({ _createdBy: req.user._id, family: true, fileType: 'picture' });
+  // const videos = await File.find({ _createdBy: req.user._id, family: true, fileType: 'video' });
+  res.render('file/generalFile', { user, pictures, videos, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+});
+
 export default router;
