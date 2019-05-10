@@ -1,0 +1,259 @@
+{{#extend 'stylesheets'}}
+<style>
+
+    .btn-file {
+    overflow: hidden;
+    position: relative;
+    vertical-align: middle;
+    }      
+.btn-file > input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    transform: translate(-300px, 0) scale(4);
+    font-size: 23px;
+    direction: ltr;
+    cursor: pointer;
+    }
+    .fileinput {
+    margin-bottom: 9px;
+    display: inline-block;
+    }
+    .fileinput .uneditable-input {
+    display: inline-block;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    cursor: text;
+    }
+    .fileinput i + .fileinput-filename,
+    .fileinput .btn + .fileinput-filename {
+    padding-left: 5px;
+    }
+    .fileinput.fileinput-exists .close {
+    opacity: 1;
+    color: #dee0e4;
+    position: relative;
+    top: 3px;
+    margin-left: 5px;
+    }
+    .fileinput .thumbnail {
+    overflow: hidden;
+    display: inline-block;
+    margin-bottom: 5px;
+    vertical-align: middle;
+    text-align: center;
+    }
+    .fileinput .thumbnail[data-trigger="fileinput"] {
+    cursor: pointer;
+    }
+    .fileinput .thumbnail:before,
+    .fileinput .thumbnail:after {
+    content: " ";
+    display: table;
+    }
+    .fileinput .thumbnail:after {
+    clear: both;
+    }
+    .fileinput .thumbnail > img {
+    max-height: 100%;
+    display: block;
+    }
+    .fileinput .btn {
+    vertical-align: middle;
+    }
+    .fileinput-exists .fileinput-new,
+    .fileinput-new .fileinput-exists {
+    display: none;
+    }
+    .fileinput-inline .fileinput-controls {
+    display: inline;
+    }
+    .fileinput .uneditable-input {
+    white-space: normal;
+    }
+    .fileinput-new .input-group .btn-file {
+    border-radius: 0 3px 3px 0;
+    }
+    .fileinput-new .input-group .btn-file.btn-xs,
+    .fileinput-new .input-group .btn-file.btn-sm {
+    border-radius: 0 2px 2px 0;
+    }
+    .fileinput-new .input-group .btn-file.btn-lg {
+    border-radius: 0 3px 3px 0;
+    }
+    .form-group.has-warning .fileinput .uneditable-input {
+    color: #574802;
+    border-color: #ffd78a;
+    }
+    .form-group.has-warning .fileinput .fileinput-preview {
+    color: #574802;
+    }
+    .form-group.has-warning .fileinput .thumbnail {
+    border-color: #ffd78a;
+    }
+    .form-group.has-error .fileinput .uneditable-input {
+    color: #ac1818;
+    border-color: #ffafbd;
+    }
+    .form-group.has-error .fileinput .fileinput-preview {
+    color: #ac1818;
+    }
+    .form-group.has-error .fileinput .thumbnail {
+    border-color: #ffafbd;
+    }
+    .form-group.has-success .fileinput .uneditable-input {
+    color: #045702;
+    border-color: #b4e8a8;
+    }
+    .form-group.has-success .fileinput .fileinput-preview {
+    color: #045702;
+    }
+    .form-group.has-success .fileinput .thumbnail {
+    border-color: #b4e8a8;
+    }
+    .input-group-addon:not(:first-child) {
+    border-left: 0;
+    }
+    .fileinput .uneditable-input,
+    .fileinput-new .input-group .btn-file {
+    display: table-cell !important;
+    }
+
+    </style>
+
+{{/extend}}
+
+
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>{{friend.firstName}} {{friend.lastName}} Profile</h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Settings 1</a>
+                            </li>
+                            <li><a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    <div class="profile_img">
+                        <div id="crop-avatar">
+                            <!-- Current avatar -->
+                            <img class="img-responsive avatar-view" src="/images/member/{{friend.passport}}" alt="{{getfriend.firstName}}"
+                                title="Change the avatar">
+                        </div>
+                    </div>
+                    <h3>{{friend.lastName}} Profile</h3>
+
+                    <ul class="list-unstyled user_data">
+                        <li><i class="fa fa-map-marker user-profile-icon"></i> {{friend.address}}
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-12">
+
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab"
+                                    data-toggle="tab" aria-expanded="true">Personal Details</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                                <!-- start user projects -->
+                                <table class="data table table-striped no-margin">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Name</td>
+                                            <td>{{friend.firstName}} {{friend.middleName}} {{friend.lastName}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>E-mail</td>
+                                            <td>{{friend.email}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Username</td>
+                                            <td>{{friend.username}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Phone Number</td>
+                                            <td>{{friend.phone}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- end user projects -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{#extend 'scripts'}}
+<script src="/javascripts/fileinput.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#roleId").change(function () {
+            var roleId = $("#roleId option:selected").val();
+
+            if (roleId === 'family') {
+                $.ajax({
+                    type: 'GET',
+                    url: '/user/get/families',
+                    dataType: 'json',
+                    data: { roleId: roleId },
+                    success: function (data) {
+                        let iter = "";
+                        for (row in data) {
+                            iter += '<option value="' + data[row]._id + '">' + data[row].name + '</option>';
+                        };
+                        const showFamily =
+                            '<label class="control-label col-md-3 col-sm-3 col-xs-12">Select Family</label>' +
+                            '<div class="col-md-9 col-sm-9 col-xs-12">' +
+                            '<select class="form-control" name="familyId" id="familyId" required>' +
+                            '<option disabled selected>Select Family</option>' +
+                            iter +
+                            '</select>' +
+                            '</div>';
+                        $('#showFamily').append(showFamily);
+                    },
+                    error: function (jqXHR, textStatus, errorThrow) {
+                        $.alert(errorThrow);
+                    }
+                });
+            } else {
+                $('#showFamily').empty();
+            }
+        });
+    });
+</script>
+{{/extend}}

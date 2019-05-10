@@ -7,6 +7,7 @@ import path from 'path';
 import jwt from 'jsonwebtoken';
 import guard from 'connect-ensure-login';
 import { adminOnly, familyOnly } from '../helpers/bridge';
+import { getServers } from 'dns';
 const router = express.Router();
 
 router.get('/', guard.ensureLoggedIn(), async (req, res) => {
@@ -40,7 +41,7 @@ router.get('/view/:_userId', guard.ensureLoggedIn(), async (req, res) => {
 });
 
 router.get('/get/families', guard.ensureLoggedIn(), async (req, res) => {
-  const users = await Family.find({ _userId: req.user._id });
+  const users = await Family.find({ _createdBy: req.user._id });
   return res.status(200).json(users);
 });
 
@@ -49,7 +50,11 @@ router.post('/add/member', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.body._userId);
   if (user) {
     user.roleId = req.body.roleId;
-    user._familyId = req.body.familyId;
+    if (req.body.roleId === 'friend') {
+      user._myFriendId = req.user._id;
+    } else if (req.body.roleId === 'family') {
+      user._familyId = req.body.familyId;
+    }
     user.save((err, user) => {
       if (err) {
         req.flash('error', 'Error occurred');
@@ -91,28 +96,28 @@ router.post('/register', async (req, res) => {
     member.phone = `+234${phone}`;
 
     Account.register(new Account(member), password,
-      async (err, account) => {
+                     async (err, account) => {
 
-        console.log(account, 'account');
+                       console.log(account, 'account');
 
-        // return false;
-        //  const tokenG = await Account.findById(account._id);
-        //  console.log(tokenG);
-        //  tokenG.token = await jwt.sign({ id: account._id }, 'freeme');
-        //  await tokenG.save(function(err) {
-        //    if (err) {
-        //      console.log(err);
-        //    }
-        //    //  console.log(tokenG);
-        //  });
+                       // return false;
+                       //  const tokenG = await Account.findById(account._id);
+                       //  console.log(tokenG);
+                       //  tokenG.token = await jwt.sign({ id: account._id }, 'freeme');
+                       //  await tokenG.save(function(err) {
+                       //    if (err) {
+                       //      console.log(err);
+                       //    }
+                       //    //  console.log(tokenG);
+                       //  });
 
-        if (err) {
-          console.log(err);
-        } else {
-          req.flash('success', `Saved Successfully! Your Username is ${member.username}`);
-          res.redirect('/login');
-        }
-      });
+                       if (err) {
+                         console.log(err);
+                       } else {
+                         req.flash('success', `Saved Successfully! Your Username is ${member.username}`);
+                         res.redirect('/login');
+                       }
+                     });
 
   }
 });
@@ -148,26 +153,26 @@ router.post('/', guard.ensureLoggedIn(), async (req, res) => {
       }
 
       Account.register(new Account(member), password,
-        async (err, account) => {
+                       async (err, account) => {
 
-          // return false;
-          const tokenG = await Account.findOne({ _id: account._id, _storeId: account._storeId });
-          //  console.log(tokenG);
-          tokenG.token = await jwt.sign({ id: account._id }, 'freeme');
-          await tokenG.save(function (err) {
-            if (err) {
-              console.log(err);
-            }
-            //  console.log(tokenG);
-          });
+                         // return false;
+                         const tokenG = await Account.findOne({ _id: account._id, _storeId: account._storeId });
+                         //  console.log(tokenG);
+                         tokenG.token = await jwt.sign({ id: account._id }, 'freeme');
+                         await tokenG.save(function(err) {
+                           if (err) {
+                             console.log(err);
+                           }
+                           //  console.log(tokenG);
+                         });
 
-          if (err) {
-            console.log(err);
-          } else if (account.roleId === 'admin') {
-            req.flash('success', `Saved Successfully! Your Username is ${member.username}`);
-            res.redirect('/users');
-          }
-        });
+                         if (err) {
+                           console.log(err);
+                         } else if (account.roleId === 'admin') {
+                           req.flash('success', `Saved Successfully! Your Username is ${member.username}`);
+                           res.redirect('/users');
+                         }
+                       });
 
     }
   });

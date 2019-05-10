@@ -62,18 +62,6 @@
         <span>New Family</span>
     </a>
 
-    <a class="quick-btn text-red" href="#" data-toggle="modal" data-target="#existProduct">
-        <i class="fa fa-bars fa-2x"></i>
-        <span>Update Existing Product</span>
-    </a>
-
-    {{#if (eq user.roleId 'admin')}}
-    <a class="quick-btn text-red" href="#" data-toggle="modal" data-target="#moveProduct">
-        <i class="fa fa-square-o fa-2x"></i>
-        <span>Move Product</span>
-    </a>
-    {{/if}}
-
 </div>
 
 
@@ -119,19 +107,19 @@
                         <td id="name{{_id}}">{{name}}</td>
 
                         <td>
-                            <button title="Edit" data-toggle="modal" _supplierId="{{_supplierId.name}}" , _branchId="{{_branchId.name}}"
-                                , productId="{{_id}}" productName="{{productName}}" categoryId="{{_categoryId.name}}"
-                                sellingPrice="{{sellingPrice}}" pieces="{{pieces}}" note="{{note}}" data-target="#editProduct"
-                                class="btn btn-primary btn-sm">
+                            {{!-- <button title="Edit" data-toggle="modal" _supplierId="{{_supplierId.name}}" ,
+                                _branchId="{{_branchId.name}}" , productId="{{_id}}" productName="{{productName}}"
+                                categoryId="{{_categoryId.name}}" sellingPrice="{{sellingPrice}}" pieces="{{pieces}}"
+                                note="{{note}}" data-target="#editProduct" class="btn btn-primary btn-sm">
                                 <i class="fa fa-edit"></i>
-                            </button>
-                            <a href="/product/view/{{_id}}">
+                            </button> --}}
+                            <a href="/family/view/{{_id}}">
                                 <button title="View" class="btn btn-success btn-sm">
                                     <i class="fa fa-eye"></i>
                                 </button>
                             </a>
-                            <button title="Delete" onclick="deleteProduct(this.value)" value="{{_id}}" class="btn btn-danger btn-sm"><i
-                                    class="fa fa-trash"></i></button>
+                            {{!-- <button title="Delete" onclick="deleteProduct(this.value)" value="{{_id}}" class="btn btn-danger btn-sm"><i
+                                    class="fa fa-trash"></i></button> --}}
                         </td>
                     </tr>
                     {{/each}}
@@ -162,8 +150,8 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Family Name</label>
                                 <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <input type="text" name="name" id="name" class="form-control"
-                                        placeholder="Family Name" required>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Family Name"
+                                        required>
                                 </div>
                             </div>
 

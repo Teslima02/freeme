@@ -23,6 +23,7 @@ import hbsutils from 'hbs-utils';
 import index from './routes/index';
 import users from './routes/users';
 import family from './routes/family';
+import file from './routes/file';
 import store from './routes/store';
 import sadmin from './routes/sadmin';
 import admin from './routes/admin';
@@ -97,6 +98,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/user', users);
 app.use('/family', family);
+app.use('/file', file);
 app.use('/store', store);
 app.use('/sadmin', sadmin);
 app.use('/admin', admin);

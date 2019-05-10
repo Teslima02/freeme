@@ -4,6 +4,7 @@ import passportLocalMongoose from 'passport-local-mongoose';
 
 const Account = new Schema({
   _familyId: { type: Schema.Types.ObjectId, ref: 'families' },
+  _myFriendId: { type: Schema.Types.ObjectId, ref: 'accounts' },
   roleId: { type: String, lowercase: true, trim: true,
             enum: ['admin', 'family', 'friend'] },
   firstName: String,
