@@ -17,7 +17,8 @@ router.get('/', guard.ensureLoggedIn(), async (req, res) => {
 
 router.get('/dashboard', guard.ensureLoggedIn(), async (req, res) => {
   const user = await Account.findById(req.user._id);
-  res.render('user/dashboard', { user, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
+  const users = await Account.find();
+  res.render('user/dashboard', { user, users, success: req.flash('success'), error: req.flash('error'), layout: 'layouts/user' });
 });
 
 router.get('/admin/dashboard', guard.ensureLoggedIn(), async (req, res) => {

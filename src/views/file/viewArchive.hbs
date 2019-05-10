@@ -1,0 +1,200 @@
+{{#extend 'stylesheets'}}
+
+<!-- Datatables -->
+<link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+
+{{/extend}}
+
+
+<div class="">
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>All Files </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i
+                                    class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="datatable" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                <th>Name</th>
+                                <th>File</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+                            {{#each files}}
+                            <tr>
+                                <td>{{inc @index}}</td>
+                                <td>{{fileName}}</td>
+                                <td>{{file}}</td>
+                                <td>
+                                    <a href="/file/view/{{_id}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
+                                    {{!-- <button onclick="diactivate(this.value)" value="{{_id}}" class="btn btn-danger btn-sm">Di-activate</i></button>
+                                    <button onclick="archive(this.value)" value="{{_id}}" class="btn btn-info btn-sm">Move To Archive</i></button> --}}
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{#extend 'scripts'}}
+
+<!-- Datatables -->
+<script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+<script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+<script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+<script src="/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+<script src="/assets/js/states.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
+
+<script>
+
+    function diactivate(id) {
+
+        $.confirm({
+            title: '<div style="color:red">Confirm!</div>',
+            content: 'Are you sure you want to Perform this Action?',
+            buttons: {
+                confirm: function () {
+                    archiveFile(id);
+                },
+                cancel: function () {
+                    $.alert('Canceled!');
+                },
+            }
+        });
+    }
+
+
+    var archiveFile = function (id) {
+
+        $.ajax({
+            type: "POST", // Post / Get method
+            url: "/file/archive/picture", //Where form data is sent on submission
+            dataType: "text", // Data type, HTML, json etc.
+            data: { id: id }, //Form variables
+            success: function (response) {
+
+                if (response === "success") {
+                    $.confirm({
+                        title: '<div style="color:green">Success</div>',
+                        content: 'Action Performed Successfully',
+                        buttons: {
+                            ok: function () {
+                                location.reload(true)
+                            },
+                        }
+                    });
+                } else if (response === "fail") {
+
+                    var msg = '<div class="alert alert-danger alert-dismissible fade in text-center" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>' +
+                        '</button>' +
+                        'You Don\'t Have Access To Perform This Operation ' +
+                        '</div>';
+
+                    $('.accessMsg').html(msg).css('text-align: center');
+                    $('.accessMsg').show().fadeOut(1000000);
+                }
+            }
+        });
+    }
+
+
+    function diactivate(id) {
+
+        $.confirm({
+            title: '<div style="color:red">Confirm!</div>',
+            content: 'Are you sure you want to Perform this Action?',
+            buttons: {
+                confirm: function () {
+                    archiveFile(id);
+                },
+                cancel: function () {
+                    $.alert('Canceled!');
+                },
+            }
+        });
+    }
+
+
+    var archiveFile = function (id) {
+
+        $.ajax({
+            type: "POST", // Post / Get method
+            url: "/file/archive/picture", //Where form data is sent on submission
+            dataType: "text", // Data type, HTML, json etc.
+            data: { id: id }, //Form variables
+            success: function (response) {
+
+                if (response === "success") {
+                    $.confirm({
+                        title: '<div style="color:green">Success</div>',
+                        content: 'Action Performed Successfully',
+                        buttons: {
+                            ok: function () {
+                                location.reload(true)
+                            },
+                        }
+                    });
+                } else if (response === "fail") {
+
+                    var msg = '<div class="alert alert-danger alert-dismissible fade in text-center" role="alert">' +
+                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>' +
+                        '</button>' +
+                        'You Don\'t Have Access To Perform This Operation ' +
+                        '</div>';
+
+                    $('.accessMsg').html(msg).css('text-align: center');
+                    $('.accessMsg').show().fadeOut(1000000);
+                }
+            }
+        });
+    }
+
+</script>
+
+{{/extend}}

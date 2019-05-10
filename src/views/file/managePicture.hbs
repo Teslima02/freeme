@@ -230,8 +230,9 @@
                                 <td>{{file}}</td>
                                 <td>
                                     <a href="/file/view/{{_id}}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-
-                                    <button onclick="archive(this.value)" value="{{_id}}" class="btn btn-danger btn-sm">Di-activate</i></button>
+                                    <button onclick="diactivate(this.value)" value="{{_id}}" class="btn btn-danger btn-sm">Di-activate</i></button>
+                                    <button onclick="archive(this.value)" value="{{_id}}" class="btn btn-info btn-sm">Move
+                                        To Archive</i></button>
                                 </td>
                             </tr>
                             {{/each}}
@@ -489,6 +490,48 @@
 
 <script>
 
+    function diactivate(id) {
+
+        $.confirm({
+            title: '<div style="color:red">Confirm!</div>',
+            content: 'Are you sure you want to Perform this Action?',
+            buttons: {
+                confirm: function () {
+                    diactiveFile(id);
+                },
+                cancel: function () {
+                    $.alert('Canceled!');
+                },
+            }
+        });
+    }
+
+
+    var diactiveFile = function (id) {
+
+        $.ajax({
+            type: "POST", // Post / Get method
+            url: "/file/archive/picture", //Where form data is sent on submission
+            dataType: "text", // Data type, HTML, json etc.
+            data: { id: id }, //Form variables
+            success: function (response) {
+
+                if (response === "success") {
+                    $.confirm({
+                        title: '<div style="color:green">Success</div>',
+                        content: 'Action Performed Successfully',
+                        buttons: {
+                            ok: function () {
+                                location.reload(true)
+                            },
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
     function archive(id) {
 
         $.confirm({
@@ -510,7 +553,7 @@
 
         $.ajax({
             type: "POST", // Post / Get method
-            url: "/file/archive/picture", //Where form data is sent on submission
+            url: "/file/archive", //Where form data is sent on submission
             dataType: "text", // Data type, HTML, json etc.
             data: { id: id }, //Form variables
             success: function (response) {
@@ -525,16 +568,6 @@
                             },
                         }
                     });
-                } else if (response === "fail") {
-
-                    var msg = '<div class="alert alert-danger alert-dismissible fade in text-center" role="alert">' +
-                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>' +
-                        '</button>' +
-                        'You Don\'t Have Access To Perform This Operation ' +
-                        '</div>';
-
-                    $('.accessMsg').html(msg).css('text-align: center');
-                    $('.accessMsg').show().fadeOut(1000000);
                 }
             }
         });
