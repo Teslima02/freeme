@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon src/bin/www --inspect --exec babel-node",
+    "start": "node dist/bin/www --inspect --exec babel-node",
     "build": "babel src --plugins transform-remove-console --out-dir dist --copy-files &&  babel src/bin/www  --out-file dist/bin/www",
     "serve": "node dist/bin/www",
     "clean": "rm -rf dist",
