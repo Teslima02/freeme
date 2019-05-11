@@ -1,9 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import Store from '../models/store';
 import Account from '../models/account';
-import Business from '../models/business';
-import Subscription from '../models/subscription';
 const router = express.Router();
 
 
@@ -16,23 +13,11 @@ router.get('/dashboard', async (req, res) => {
 
 
 router.get('/', async (req, res) => {
-  res.render('site/index', { msg: req.flash('info'), layout: 'layouts/site' });
+  res.redirect('/login');
 });
-
-
-router.get('/about', (req, res) => {
-  res.render('site/about', { layout: 'layouts/site' });
-});
-
-
-router.get('/register', async (req, res) => {
-  const business = await Business.find();
-  res.render('site/register', { business, expressFlash: req.flash('info'), layout: 'layouts/site' });
-});
-
 
 router.get('/login', (req, res) => {
-  res.render('store/login', {
+  res.render('layouts/login', {
     success: req.flash('success'), error: req.flash('error'), user: req.user,
     layout: false
   });
